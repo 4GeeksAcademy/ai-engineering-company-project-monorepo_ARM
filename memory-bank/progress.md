@@ -7,7 +7,7 @@
 
 ## Resumen ejecutivo
 
-Brasaland es rentable y tiene clientes fieles en Colombia y Florida, pero opera con herramientas pensadas para un único local. El equipo interno **Brasaland Digital** (impulsado por la CEO Mariana Restrepo) debe construir la plataforma digital desde casi cero. **Hito actual completado:** la infraestructura base de agentes y la estructura del monorepo. **En curso:** definir arquitectura/stack y los primeros agentes concretos. **Siguiente fase:** empezar a construir las interfaces (`uis/`) y los servicios (`services/`) de la empresa.
+Brasaland es rentable y tiene clientes fieles en Colombia y Florida, pero opera con herramientas pensadas para un único local. El equipo interno **Brasaland Digital** (impulsado por la CEO Mariana Restrepo) debe construir la plataforma digital desde casi cero. **Hito actual completado:** la infraestructura base de agentes, la estructura del monorepo, las reglas de gobernanza (`multi-market-domain`, `frontend-backend-layout`), la skill `memory-bank-update` y la definición de ubicación del código de producto en `techContext.md`. **En curso:** definir arquitectura/stack y los primeros agentes concretos. **Siguiente fase:** empezar a construir las interfaces (`uis/`) y los servicios (`services/`) de la empresa.
 
 ---
 
@@ -24,6 +24,10 @@ Brasaland es rentable y tiene clientes fieles en Colombia y Florida, pero opera 
 | 7 | Catálogo base de skills | `skills/` | `_template/` (SKILL.md + ejemplos/recursos/scripts), `data-analysis/` (script `pandas_clean.py` + `common_metrics.md`), `research/` (ejemplos y templates), `code-review/` (esqueleto). |
 | 8 | Tipos compartidos | `packages/shared/` | Paquete privado `@repo/shared-types` con base (`Id`, `BaseEntity`) listo para extender con tipos de dominio. |
 | 9 | Esqueleto de datos | `data/` | Carpetas `raw/`, `pipelines/`, `process/`, `eval/` definidas (sin contenido todavía). |
+| 10 | Regla de gobernanza multi-mercado | `.agents/rules/multi-market-domain.md` | Regla de dominio: divisas explícitas (COP/USD), idioma por mercado (es/en), prohibición de inventar datos de negocio y consistencia de marca. Complementa a `AGENTS.md`. |
+| 11 | Skill de actualización del tablero | `.agents/skills/memory-bank-update/SKILL.md` | Skill recurrente del flujo: objetivo, cuándo usar, inputs, procedimiento y criterios de aceptación para mantener `memory-bank/progress.md` siempre al día (paso 3 de `AGENTS.md`). |
+| 12 | Ubicación del código de producto definida | `memory-bank/techContext.md` | Nueva sección con la tabla de rutas: `uis/`, `uis/website`, `uis/backoffice` y `services/` (API central como `services/api/` FastAPI) + criterio de decisión (UI → uis, API → services). |
+| 13 | Regla de layout frontend/backend | `.agents/rules/frontend-backend-layout.md` | Regla de gobernanza que fija dónde debe vivir el código de producto (frontend en `uis/`, backend en `services/`), con prohibiciones y checklist pre-commit. |
 
 ---
 

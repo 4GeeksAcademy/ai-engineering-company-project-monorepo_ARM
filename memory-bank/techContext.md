@@ -35,6 +35,19 @@ El stack actual de Brasaland es mínimo y está fragmentado. No hay plataforma d
 - **Multi-idioma:** español e inglés (soporte multiidioma recomendado para la plataforma de formación, empezando por un idioma base).
 - **Inteligencia de negocio / ML:** predicción de demanda de ingredientes basada en ventas históricas y stock actual; personalización de menú; agentes de soporte multilingüe; telemetría de ventas en tiempo real.
 
+## Ubicación del código de producto
+
+Todo el código de producto de la empresa vive en las carpetas de la plantilla del monorepo. **No crear** un segundo árbol de frontend o de API en otra ubicación. Cada ruta tiene una responsabilidad única:
+
+| Ruta | Qué va aquí cuando se cree |
+|------|----------------------------|
+| `uis/` | Todos los proyectos frontend de la empresa (interfaces de usuario). |
+| `uis/website` | Web corporativa de cara al público (entrada en `/`), con marca y copy alineados con `CONTEXT.md` (briefing de la empresa). |
+| `uis/backoffice` | App interna de la empresa (layout propio, separado de la web pública; vista de entrada en `/`) — por ejemplo backoffice de operaciones, RRHH, formación, etc. |
+| `services/` | APIs y servicios backend (un subcarpeta por servicio). La API central de Brasaland se desarrolla aquí como `services/api/` (FastAPI), con routers por dominio. |
+
+Criterio de decisión (regla rápida del README raíz de la plantilla): si tiene interfaz visual → `uis/`. Si expone una API o corre en segundo plano → `services/`. Si mueve o transforma datos → `data/`. Si el trabajo lo hace un modelo de IA → `agents/` (+ `skills/` o `mcps/`).
+
 ## Restricciones
 
 - **Partida de cero:** no hay API interna, ni datos consolidados, ni telemetría, ni pipeline previo que reutilizar; la plataforma debe construirse desde casi cero.
