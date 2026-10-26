@@ -1,23 +1,67 @@
-# Progress — Brasaland
+# Progress — Brasaland · Tablero de control del proyecto
 
-> Fuente única de información: `CONTEXT.md` (Briefing de empresa · 4Geeks Academy · AI Engineering Track).
+> Fuente única: `CONTEXT.md` (Briefing de empresa · 4Geeks Academy · AI Engineering Track).
 > Última actualización: 2026-10-26.
 
-## Estado actual del desarrollo (basado en el briefing)
+---
 
-**Resumen ejecutivo:** Brasaland es rentable y tiene una base de clientes fiel en los dos mercados (Colombia y Florida), pero opera con herramientas diseñadas para un único restaurante local. El equipo interno **Brasaland Digital** (impulsado por la CEO Mariana Restrepo) acaba de ser creado con el mandato de construir la plataforma digital desde casi cero. El proyecto está en **fase 0 / inicio**: no existe todavía API, ni datos consolidados, ni telemetría, ni dashboards. Todo lo descrito a continuación son **requerimientos pendientes de construir**, no funcionalidades ya entregadas.
+## Resumen ejecutivo
 
-### Lo que ya existe (estado actual del sistema, NO proyectos completados)
-- 14 restaurantes operando en 2 países con POS distintos sin integración.
-- Web estática (2019) sin pedidos online; app obsoleta (2,8 en App Store).
-- Fidelización "Brasa Points" en tarjetas físicas de sellos (≈60% de clientes no las usan; no generan datos).
-- Procesos manuales: pedidos por WhatsApp/teléfono, informes en papel/Excel, RRHH y proveedores por email/Excel, formación en Google Drive sin estructura.
-- Equipo interno Brasaland Digital creado; CTO Nicolás Park con mandato de construir la plataforma.
+Brasaland es rentable y tiene clientes fieles en Colombia y Florida, pero opera con herramientas pensadas para un único local. El equipo interno **Brasaland Digital** (impulsado por la CEO Mariana Restrepo) debe construir la plataforma digital desde casi cero. **Hito actual completado:** la infraestructura base de agentes, la estructura del monorepo, las reglas de gobernanza (`multi-market-domain`, `frontend-backend-layout`), la skill `memory-bank-update` y la definición de ubicación del código de producto en `techContext.md`. **En curso:** definir arquitectura/stack y los primeros agentes concretos. **Siguiente fase:** empezar a construir las interfaces (`uis/`) y los servicios (`services/`) de la empresa.
 
-### Lo que el briefing ordena construir (backlog de trabajo — nada entregado aún)
+---
+
+## 1. ✅ Completado — Infraestructura base de agentes (hito actual)
+
+| # | Entregable | Dónde | Detalle |
+|---|-----------|-------|---------|
+| 1 | Empresa asignada y cargada | `CONTEXT.md` | Briefing completo de **Brasaland** (14 locales, 2 países, ~115 empleados, ~6M USD/año). |
+| 2 | Selección documentada | `company-choice.md` | Decisión de trabajar con Brasaland y retos/áreas prioritarias (RRHH, Operaciones, Marketing/CRM, API central). Idea inicial de agente: **"Tu asesor de Brasa"** (fidelización y pedidos). |
+| 3 | Memory-bank inicializado | `memory-bank/` | `projectbrief.md`, `techContext.md` y este `progress.md` creados a partir de CONTEXT.md. |
+| 4 | Directrices de operación para agentes de IA | `AGENTS.md` | Lectura obligatoria de contexto, flujo pre-commit de 4 pasos y zonas protegidas. |
+| 5 | Estructura del monorepo | raíz | Carpetas top-level con README por capa: `uis/`, `services/`, `data/`, `agents/`, `skills/`, `mcps/`, `workflows/`, `packages/`, `shared/`, `docs/`, `infra/`, `scripts/`, `internal/`. |
+| 6 | Plantilla base de agente | `agents/_template/` | Estructura estándar: `agent.py`, `tests/` y README (es/en) para crear agentes consistentes. |
+| 7 | Catálogo base de skills | `skills/` | `_template/` (SKILL.md + ejemplos/recursos/scripts), `data-analysis/` (script `pandas_clean.py` + `common_metrics.md`), `research/` (ejemplos y templates), `code-review/` (esqueleto). |
+| 8 | Tipos compartidos | `packages/shared/` | Paquete privado `@repo/shared-types` con base (`Id`, `BaseEntity`) listo para extender con tipos de dominio. |
+| 9 | Esqueleto de datos | `data/` | Carpetas `raw/`, `pipelines/`, `process/`, `eval/` definidas (sin contenido todavía). |
+| 10 | Regla de gobernanza multi-mercado | `.agents/rules/multi-market-domain.md` | Regla de dominio: divisas explícitas (COP/USD), idioma por mercado (es/en), prohibición de inventar datos de negocio y consistencia de marca. Complementa a `AGENTS.md`. |
+| 11 | Skill de actualización del tablero | `.agents/skills/memory-bank-update/SKILL.md` | Skill recurrente del flujo: objetivo, cuándo usar, inputs, procedimiento y criterios de aceptación para mantener `memory-bank/progress.md` siempre al día (paso 3 de `AGENTS.md`). |
+| 12 | Ubicación del código de producto definida | `memory-bank/techContext.md` | Nueva sección con la tabla de rutas: `uis/`, `uis/website`, `uis/backoffice` y `services/` (API central como `services/api/` FastAPI) + criterio de decisión (UI → uis, API → services). |
+| 13 | Regla de layout frontend/backend | `.agents/rules/frontend-backend-layout.md` | Regla de gobernanza que fija dónde debe vivir el código de producto (frontend en `uis/`, backend en `services/`), con prohibiciones y checklist pre-commit. |
+
+---
+
+## 2. 🚧 En curso
+
+- [ ] **Definir arquitectura y stack tecnológico** de la plataforma (no declarados en el briefing) — decisión del CTO Nicolás Park y el equipo de Tecnología.
+- [ ] **Definir el primer agente concreto** de Brasaland. Candidatos documentados en `company-choice.md`:
+  - *"Tu asesor de Brasa"* (Marketing/Experiencia digital): recomienda platos según preferencias, historial de pedidos y puntos "Brasa Points".
+  - Agente de RRHH (gestión de disponibilidad/ausencias) y/o agente de pedidos/operaciones (histórico centralizado de pedidos e inventario).
+- [ ] **Completar plantillas en blanco:** `agents/_template/agent.py`, `skills/_template/SKILL.md` y el contenido de `skills/code-review/` (hoy solo esqueleto).
+- [ ] **Diseñar el esquema de datos de dominio** en `@repo/shared-types` (Location, Menu, Sale, Customer, Supplier) como base de API y agentes.
+
+---
+
+## 3. 🔜 Próximos pasos lógicos — hacia interfaces (`uis/`) y servicios (`services/`)
+
+> Orden de construcción propuesto para la siguiente fase, empezando por lo fundacional.
+
+1. **API central FastAPI** en `services/api/` con routers por dominio (locales, menús, ventas, clientes, proveedores). Es la base de la que dependen dashboards, UIs y agentes. *(Recomendación del README del repo: un único backend central, sin microservicios prematuros.)*
+2. **Pipeline de datos y telemetría** (`data/pipelines/`) que alimente los dashboards de operaciones, marketing y finanzas; captura de datos desde los 14 locales (COP y USD).
+3. **Interfaz de operaciones** (`uis/backoffice/` o `uis/website/`): primer dashboard de ventas en tiempo real por local — primer vertical completo para demostrar valor rápido. *(Decisiones de moneda: COP y USD.)*
+4. **Sistemas de dominio del backlog por área** (ver tabla siguiente), priorizados por solapamiento de datos (menús/ventas → marketing; ventas/stock → compras).
+5. **UI de clientes** (app de fidelización/pedidos "Brasa Points" digital) y **asistente ejecutivo de IA** (dashboard de la CEO en lenguaje natural) una vez exista API y datos.
+6. **Decidir idioma base** (es/en) de la plataforma de formación y planificar multiidioma.
+7. **Documentar decisiones técnicas** (ADRs en `docs/`) y mantener este tablero actualizado tras cada hito.
+
+---
+
+## 📋 Backlog por área (requisitos de `CONTEXT.md` — pendientes)
+
+> Todo esto es trabajo por construir; nada de la operación actual de Brasaland está todavía digitalizado.
 
 **Pila fundacional (Tecnología / CTO):**
-- [ ] API central de Brasaland (locales, menús, ventas, clientes, proveedores).
+- [ ] API central (locales, menús, ventas, clientes, proveedores).
 - [ ] Telemetría en tiempo real desde cada local.
 - [ ] Pipeline de datos (operaciones, marketing, finanzas).
 
@@ -49,25 +93,14 @@
 **Dirección Ejecutiva (Mariana Restrepo):**
 - [ ] Dashboard ejecutivo con ventas totales de la cadena (USD y COP).
 - [ ] Asistente de IA consultable en lenguaje natural.
-- [ ] Informe semanal automatizado (generado y enviado cada lunes a las 7:00).
+- [ ] Informe semanal automatizado (lunes a las 7:00).
 
-## Problemas detectados que motivan el trabajo (por qué hacemos esto)
-- Sin visibilidad en tiempo real de lo que ocurre en cada local; decisiones basadas en llamadas, PDFs semanales de los martes e intuición.
-- Exceso de stock en unos locales y roturas en otros (pedidos sin datos de inventario).
-- Sin conocimiento del cliente (marketing a ciegas) y fidelización sin datos.
-- Competidores (incluidas cadenas más nuevas y pequeñas) ganando terreno con pedidos digitales, marketing data-driven y dashboards operativos.
+---
 
-## Siguientes pasos (próximas acciones recomendadas)
-1. **Definir la arquitectura de la plataforma** y el stack tecnológico (no declarados en el briefing) — decisión de Nicolás Park y el equipo de Tecnología.
-2. **Diseñar y construir la API central de Brasaland** como primer bloque fundacional (dominios: locales, menús, ventas, clientes, proveedores), ya que el resto de sistemas dependen de ella.
-3. **Establecer el pipeline de datos y la telemetría** para alimentar los dashboards (es requisito transversal de operaciones, marketing y finanzas).
-4. **Priorizar un primer vertical completo** (candidato natural: dashboard de ventas en tiempo real para Operaciones) para demostrar valor rápido a la cadena.
-5. **Elegir el orden de los sistemas de dominio** según prioridad de negocio, considerando el solapamiento de datos (menús/ventas alimentan a marketing; ventas/stock alimentan a compras).
-6. **Decidir el idioma base** de la plataforma de formación (español o inglés) y planificar el multiidioma.
-7. **Documentar decisiones técnicas** a medida que se tomen para mantener actualizado este memory-bank (proyecto en fase inicial: estos ficheros se encuentran en construcción).
+## ⚠️ Deuda técnica y riesgos conocidos
 
-## Deuda técnica / riesgos conocidos
 - Puntos de venta distintos por país sin integración: requieren estrategia de captura de datos en cada local.
-- Datos históricos dispersos en hojas de cálculo y documentos no estructurados (limpieza y consolidación pendientes).
+- Datos históricos dispersos en hojas de cálculo y documentos no estructurados (limpieza/consolidación pendientes).
 - Dos legislaciones laborales (RRHH) y dos mercados culturales (marketing) complican la estandarización.
 - Equipo de Tecnología pequeño: el alcance (7 áreas, 2 países) debe dimensionarse de forma iterativa.
+- Plantillas de agentes aún con archivos vacíos; el catálogo de agentes reales está por construir.
